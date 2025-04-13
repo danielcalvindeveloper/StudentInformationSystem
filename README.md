@@ -1,2 +1,1 @@
-# StudentInformationSystem
-Where all student files, grades, and personal details were kept.
+Student Information System (SIS) - Hexagonal Architecture - Java 18 + Spring Boot
