@@ -3,6 +3,10 @@ package ar.net.sabadostech.sis.domain.policy;
 import ar.net.sabadostech.sis.domain.model.*;
 import ar.net.sabadostech.sis.domain.policy.context.NotificationContext;
 import ar.net.sabadostech.sis.domain.policy.context.NotificationContextFactory;
+import ar.net.sabadostech.sis.domain.service.IdSequenceService;
+import ar.net.sabadostech.sis.infrastructure.sequence.InMemoryIdSequenceService;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,6 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EducationalNotificationPolicyTest {
 
+	private IdSequenceService sequenceService;
+	
+	@BeforeEach
+	public void before() {
+		 sequenceService = new InMemoryIdSequenceService();
+	}
+	
     @Test
     public void testDetermineRecipients_includesAllResponsiblesAndTeacher() {
         ResponsibleAdult adult1 = new ResponsibleAdult("María López", "maria@mail.com", "123", false, true);
@@ -19,8 +30,8 @@ public class EducationalNotificationPolicyTest {
         GuardianAssignment a1 = new GuardianAssignment(null, adult1, GuardianRole.MOTHER, false);
         GuardianAssignment a2 = new GuardianAssignment(null, adult2, GuardianRole.FATHER, false);
 
-        StudentRecord student1 = StudentRecord.create(null, null, List.of(a1), id -> false);
-        StudentRecord student2 = StudentRecord.create(null, null, List.of(a2), id -> false);
+        StudentRecord student1 = StudentRecord.create(StudentId.generate(sequenceService.next("STU")), null, null, List.of(a1), id -> false);
+        StudentRecord student2 = StudentRecord.create(StudentId.generate(sequenceService.next("STU")), null, null, List.of(a2), id -> false);
 
         Teacher teacher = new Teacher("Prof. Ana", "ana@colegio.com", "Matemática");
 
