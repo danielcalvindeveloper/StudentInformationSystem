@@ -33,7 +33,7 @@ public class EducationalNotificationPolicyTest {
         StudentRecord student1 = StudentRecord.create(StudentId.generate(sequenceService.next("STU")), null, null, List.of(a1), id -> false);
         StudentRecord student2 = StudentRecord.create(StudentId.generate(sequenceService.next("STU")), null, null, List.of(a2), id -> false);
 
-        Teacher teacher = new Teacher("Prof. Ana", "ana@colegio.com", "Matemática");
+        Teacher teacher = new Teacher(TeacherId.generate(sequenceService.next("TCH")),"Prof. Ana", "ana@colegio.com", "Matemática");
 
         NotificationContext context = NotificationContextFactory.forTeacherAndStudents(teacher, List.of(student1, student2));
 

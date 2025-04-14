@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 public class Teacher implements NotificationRecipient {
 
+    private final TeacherId id;
     private final String fullName;
     private final String institutionalEmail;
     private final String subject;
